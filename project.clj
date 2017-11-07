@@ -3,6 +3,8 @@
   :url "http://github.com/opqdonut/clojure-train-radiator"
   :min-lein-version "2.0.0"
   :dependencies [[org.clojure/clojure "1.8.0"]
+                 [cheshire "5.8.0"]
+                 [clj-http "3.7.0"]
                  [compojure "1.5.1"]
                  [ring/ring-defaults "0.2.1"]]
   :plugins [[lein-ring "0.9.7"]]
