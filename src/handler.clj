@@ -1,6 +1,7 @@
 (ns handler
   (:require [cheshire.core :as json]
             [clj-http.client :as http]
+            [clj-time.local :as localtime]
             [compojure.core :refer :all]
             [compojure.route :as route]
             [hiccup.core :refer [html]]
@@ -11,17 +12,22 @@
 (defn get-trains []
   (json/parse-string (:body (http/get +train-api+))))
 
+(defn show-time [t]
+  (localtime/format-local-time t :hour-minute))
+
 (defn timetable [row]
-  [:li
-   (get row "type")
-   " "
-   (get row "stationShortCode")
-   " "
-   (get row "scheduledTime")
-   " "
-   (get row "actualTime")
-   " "
-   (get row "differenceInMinutes")])
+  (let [scheduled (get row "scheduledTime")
+        actual (get row "actualTime")]
+    [:li
+     (show-time scheduled)
+     (when actual
+       (list
+        "->"
+        (show-time (get row "actualTime"))))
+     " "
+     (get row "type")
+     " "
+     (get row "stationShortCode")]))
 
 (defn train [t]
   [:li

@@ -26,13 +26,15 @@ Useful documentation
 - [ClojureDocs](https://clojuredocs.org) – the Clojure standard library documentation, searchable
 - [Compojure wiki](https://github.com/weavejester/compojure/wiki) – the web framework used in this project
 - [Hiccup wiki](https://github.com/weavejester/hiccup/wiki) - how to generate HTML
-
-TODO
+- [clj-time](https://github.com/clj-time/clj-time) - how to handle time
 
 Tasks
 =====
 
-TODO
+- make the page prettier
+- only show future events
+- make the station configurable
+- collect statistics of late trains
 
 Where to go from here?
 ======================
