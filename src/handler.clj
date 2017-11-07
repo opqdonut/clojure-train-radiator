@@ -11,12 +11,41 @@
 (defn get-trains []
   (json/parse-string (:body (http/get +train-api+))))
 
+(defn timetable [row]
+  [:li
+   (get row "type")
+   " "
+   (get row "stationShortCode")
+   " "
+   (get row "scheduledTime")
+   " "
+   (get row "actualTime")
+   " "
+   (get row "differenceInMinutes")])
+
+(defn train [t]
+  [:li
+   (get t "trainNumber")
+   " "
+   (get t "trainType")
+   " "
+   (get t "trainCategory")
+   " "
+   (get t "commuterLineID")
+   [:ul
+    (for [row (take 5 (get t "timeTableRows"))]
+      (timetable row))]])
+
+(defn render [trains]
+  [:ul
+   (for [t trains]
+     (train t))])
+
 (defn page []
   [:html
    [:body
     [:h1 "Trains"]
-    [:ul
-     [:li (str (count (get-trains)) " trains")]]]])
+    (render (get-trains))]])
 
 (defroutes app-routes
   (GET "/" [] (html (page)))
