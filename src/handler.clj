@@ -53,8 +53,17 @@
     [:h1 "Trains"]
     (render (get-trains "HKI"))]])
 
+(defn hello [name]
+  [:html
+   [:body
+    [:p
+     "Hello "
+     [:em name]
+     ", good to see you!"]]])
+
 (defroutes app-routes
   (GET "/" [] (html (page)))
+  (GET "/hello/:name" [name] (html (hello name)))
   (route/not-found "Not Found"))
 
 (def app
