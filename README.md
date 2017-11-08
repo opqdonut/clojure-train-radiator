@@ -32,8 +32,9 @@ Tasks
 =====
 
 - make the page prettier
-- only show future events
 - make the station configurable
+- show only time table rows for this station
+- only show future events
 - collect statistics of late trains
 
 Where to go from here?
