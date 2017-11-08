@@ -1,45 +1,45 @@
 (ns handler
-  (:require [cheshire.core :as json]
-            [clj-http.client :as http]
+  (:require [clj-http.client :as http]
             [clj-time.local :as localtime]
             [compojure.core :refer :all]
             [compojure.route :as route]
             [hiccup.core :refer [html]]
             [ring.middleware.defaults :refer [wrap-defaults site-defaults]]))
 
-(def +train-api+ "https://rata.digitraffic.fi/api/v1/live-trains?station=HKI")
+(def +train-api+ "https://rata.digitraffic.fi/api/v1/live-trains")
 
-(defn get-trains []
-  (json/parse-string (:body (http/get +train-api+))))
+(defn get-trains [station]
+  (:body
+   (http/get +train-api+ {:as :json :query-params {:station station}})))
 
 (defn show-time [t]
   (localtime/format-local-time t :hour-minute))
 
 (defn timetable [row]
-  (let [scheduled (get row "scheduledTime")
-        actual (get row "actualTime")]
+  (let [scheduled (:scheduledTime row)
+        actual (:actualTime row)]
     [:li
      (show-time scheduled)
      (when actual
        (list
         "->"
-        (show-time (get row "actualTime"))))
+        (show-time actual)))
      " "
-     (get row "type")
+     (:type row)
      " "
-     (get row "stationShortCode")]))
+     (:stationShortCode row)]))
 
 (defn train [t]
   [:li
-   (get t "trainNumber")
+   (:trainNumber t)
    " "
-   (get t "trainType")
+   (:trainType t)
    " "
-   (get t "trainCategory")
+   (:trainCategory t)
    " "
-   (get t "commuterLineID")
+   (:commuterLineID t)
    [:ul
-    (for [row (take 5 (get t "timeTableRows"))]
+    (for [row (take 5 (:timeTableRows t))]
       (timetable row))]])
 
 (defn render [trains]
@@ -51,7 +51,7 @@
   [:html
    [:body
     [:h1 "Trains"]
-    (render (get-trains))]])
+    (render (get-trains "HKI"))]])
 
 (defroutes app-routes
   (GET "/" [] (html (page)))
