@@ -6,11 +6,11 @@
             [hiccup.core :refer [html]]
             [ring.middleware.defaults :refer [wrap-defaults site-defaults]]))
 
-(def +train-api+ "https://rata.digitraffic.fi/api/v1/live-trains")
+(def TRAIN_API "https://rata.digitraffic.fi/api/v1/live-trains")
 
 (defn get-trains [station]
   (:body
-   (http/get +train-api+ {:as :json :query-params {:station station}})))
+   (http/get TRAIN_API {:as :json :query-params {:station station}})))
 
 (defn show-time [t]
   (localtime/format-local-time t :hour-minute))
