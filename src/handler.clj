@@ -49,6 +49,8 @@
 
 (defn page []
   [:html
+   [:head
+    [:link {:rel "stylesheet" :href "/style.css" :type "text/css"}]]
    [:body
     [:h1 "Trains"]
     (render (get-trains "HKI"))]])
@@ -64,6 +66,7 @@
 (defroutes app-routes
   (GET "/" [] (html (page)))
   (GET "/hello/:name" [name] (html (hello name)))
+  (route/resources "/")
   (route/not-found "Not Found"))
 
 (def app
