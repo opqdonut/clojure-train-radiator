@@ -1,10 +1,15 @@
 (ns handler
   (:require [clj-http.client :as http]
             [clj-time.local :as localtime]
+            [clj-time.core :as time]
             [compojure.core :refer :all]
             [compojure.route :as route]
             [hiccup.core :refer [html]]
             [ring.middleware.defaults :refer [wrap-defaults site-defaults]]))
+
+;;
+;; Accessing the API
+;;
 
 (def TRAIN_API "https://rata.digitraffic.fi/api/v1/live-trains")
 
@@ -12,8 +17,19 @@
   (:body
    (http/get TRAIN_API {:as :json :query-params {:station station}})))
 
+;;
+;; Time manipulation
+;;
+
 (defn show-time [t]
   (localtime/format-local-time t :hour-minute))
+
+(defn in-the-future? [t]
+  (time/before? (localtime/local-now) (localtime/to-local-date-time t)))
+
+;;
+;; Generating HTML
+;;
 
 (defn timetable [row]
   (let [scheduled (:scheduledTime row)
@@ -24,6 +40,8 @@
        (list
         "->"
         (show-time actual)))
+     (when (in-the-future? scheduled)
+       "***")
      " "
      (:type row)
      " "
@@ -62,6 +80,10 @@
      "Hello "
      [:em name]
      ", good to see you!"]]])
+
+;;
+;; HTTP server
+;;
 
 (defroutes app-routes
   (GET "/" [] (html (page)))
