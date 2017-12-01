@@ -1,11 +1,13 @@
 (ns handler
-  (:require [clj-http.client :as http]
+  (:require [clojure.tools.namespace.repl :refer [refresh]]
+            [clj-http.client :as http]
             [clj-time.local :as localtime]
             [clj-time.core :as time]
             [compojure.core :refer :all]
             [compojure.route :as route]
             [hiccup.core :refer [html]]
-            [ring.middleware.defaults :refer [wrap-defaults site-defaults]]))
+            [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
+            [ring.server.standalone]))
 
 ;;
 ;; Accessing the API
@@ -93,3 +95,14 @@
 
 (def app
   (wrap-defaults app-routes site-defaults))
+
+;;
+;; For interactive development
+;;
+
+(def server-atom (atom nil))
+(defn run []
+  (when @server-atom (.stop @server-atom))
+  (reset! server-atom (ring.server.standalone/serve #'app {:join? false
+                                                           :auto-refresh? false
+                                                           :open-browser? false})))
