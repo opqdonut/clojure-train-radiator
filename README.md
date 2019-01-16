@@ -19,6 +19,7 @@ Project structure
 - `project.clj`: the configuration file for Leiningen
 - `src/handler.clj`: the code is here
 - `resources/public/style.css`: the CSS style file
+- `test/handler_test.clj`: unit tests (run these with `lein test`)
 
 Useful documentation
 ====================

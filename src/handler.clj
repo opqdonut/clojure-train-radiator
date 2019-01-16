@@ -89,6 +89,7 @@
 
 (defroutes app-routes
   (GET "/" [] (html (page)))
+  ;; example of a parameterized route:
   (GET "/hello/:name" [name] (html (hello name)))
   (route/resources "/")
   (route/not-found "Not Found"))
