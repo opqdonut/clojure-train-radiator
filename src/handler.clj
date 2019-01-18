@@ -107,3 +107,6 @@
   (reset! server-atom (ring.server.standalone/serve #'app {:join? false
                                                            :auto-refresh? false
                                                            :open-browser? false})))
+
+(defn -main []
+  (run))

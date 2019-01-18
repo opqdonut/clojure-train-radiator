@@ -10,7 +10,7 @@ Getting started
 
 1. Install the Clojure build tool [Leiningen](https://leiningen.org).
 2. Run `lein ring server` to start the server and a browser
-4. Change the code
+4. Change the code (file `src/handler.clj`)
 5. Refresh the browser and see your changes
 
 Project structure
@@ -28,6 +28,7 @@ Useful documentation
 - [Compojure wiki](https://github.com/weavejester/compojure/wiki) – the web framework used in this project
 - [Hiccup wiki](https://github.com/weavejester/hiccup/wiki) - how to generate HTML
 - [clj-time](https://github.com/clj-time/clj-time) - how to handle time
+- [docs for the digitraffic api](https://rata.digitraffic.fi/swagger/index.html)
 
 Tasks
 =====
@@ -56,6 +57,20 @@ Here's how:
 4. Reload code changes with either
    - the reload functionality in your IDE
    - running `(refresh)` in the repl
+
+Experimental: integrated editor
+===============================
+
+In case you don't feel like installing a Clojure IDE or editor, you
+can try out the browser-based editor, [Nightlight](https://sekao.net/nightlight/):
+
+1. Run `lein nightlight`
+2. Point your broser to <http://localhost:4000>
+3. Open the file `src/handler.clj`
+4. You can run the server like this:
+   1. Switch to _Clojure REPL_ (on the top left)
+   2. Type in `(handler/run)`
+   3. Open another browser tab to <http://localhost:3000>
 
 Where to go from here?
 ======================

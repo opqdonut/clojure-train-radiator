@@ -10,10 +10,11 @@
                  [compojure "1.6.1"]
                  [hiccup "1.0.5"]
                  [ring/ring-defaults "0.3.2"]
-                 [ring-server "0.5.0"]]
-  :plugins [[lein-ring "0.9.7"]]
+                 [ring-server "0.5.0"]
+                 [javax.servlet/servlet-api "2.5"]
+                 [ring/ring-mock "0.3.2"]]
+  :plugins [[lein-ring "0.9.7"]
+            [nightlight/lein-nightlight "RELEASE"]]
   :ring {:handler handler/app}
-  :repl-options {:init-ns handler}
-  :profiles
-  {:dev {:dependencies [[javax.servlet/servlet-api "2.5"]
-                        [ring/ring-mock "0.3.2"]]}})
+  :main handler
+  :repl-options {:init-ns handler})
